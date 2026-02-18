@@ -3,6 +3,7 @@ package ui;
 import controller.AuthController;
 import dto.LoginDto;
 import dto.ProfileDto;
+import dto.RegisterDto;
 import entity.Profile;
 import enums.Role;
 import utils.ScannerUtil;
@@ -68,7 +69,7 @@ public class AuthUi {
         System.out.print("Enter password : ");
         String password = ScannerUtil.SCANNER_STR.next();
 
-        String answer = authController.save(new ProfileDto(name, surname, phone, password));
+        String answer = authController.save(new RegisterDto(name, surname, phone, password));
         if(answer.equals("phoneExist")){
             System.out.println("This number already registrated");
         }

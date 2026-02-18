@@ -16,7 +16,6 @@ public class Profile extends BaseEntity{
     private String surname;
     private String phone;
     private String password;
-    private Integer cardCount;
     private Status status;
     private Role role;
 

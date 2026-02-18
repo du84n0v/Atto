@@ -2,6 +2,7 @@ package service;
 
 import dto.LoginDto;
 import dto.ProfileDto;
+import dto.RegisterDto;
 import entity.Profile;
 import enums.Role;
 import repository.ProfileRepository;
@@ -12,9 +13,10 @@ import java.util.UUID;
 
 public class ProfileService {
 
-    private final ProfileRepository profileRepository = new ProfileRepository();
+    private final ProfileRepository repository = new ProfileRepository();
+    private final CardService cardService = new CardService();
 
-    public String save(ProfileDto profileDto) {
+    public String save(RegisterDto profileDto) {
         if(phoneExist(profileDto.phone())){
             return "phoneExist";
         }
@@ -30,23 +32,43 @@ public class ProfileService {
         profile.setPassword(profileDto.password());
         profile.setRole(Role.USER);
 
-        profileRepository.save(List.of(profile));
+        repository.save(List.of(profile));
         return "done";
 
     }
 
     private boolean phoneExist(String phone) {
-        return profileRepository.getData()
+        return repository.getData()
                 .stream()
                 .anyMatch(profile -> profile.getPhone().equals(phone));
     }
 
     public Profile login(LoginDto loginDto) {
-        return profileRepository.getData()
+        return repository.getData()
                 .stream()
                 .filter(profile -> profile.getPhone().equals(loginDto.phone()) &&
                         profile.getPassword().equals(loginDto.password()))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public List<ProfileDto> getAllProfile(){
+        List<Profile> profiles = repository.getData();
+
+        return profiles.stream().map(profile -> {
+
+            int count = cardService.getProfileCards(profile.getId()).size();
+
+            return new ProfileDto(
+                    profile.getId(),
+                    profile.getName(),
+                    profile.getSurname(),
+                    profile.getPhone(),
+                    profile.getPassword(),
+                    count,
+                    profile.getStatus(),
+                    profile.getCreatedDate()
+            );})
+                .toList();
     }
 }

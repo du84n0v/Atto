@@ -1,17 +1,14 @@
 package service;
 
 import dto.LoginDto;
-import dto.ProfileDto;
+import dto.RegisterDto;
 import entity.Profile;
-
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class AuthService {
 
     private final ProfileService profileService = new ProfileService();
 
-    public String save(ProfileDto profileDto) {
+    public String save(RegisterDto profileDto) {
         return profileService.save(profileDto);
     }
 
