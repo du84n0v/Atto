@@ -12,4 +12,8 @@ public class ProfileController {
     public List<ProfileDto> getAllProfile() {
         return service.getAllProfile();
     }
+
+    public String changeProfileStatusByPhone(String phone) {
+        return service.changeProfileStatusByPhone(phone);
+    }
 }

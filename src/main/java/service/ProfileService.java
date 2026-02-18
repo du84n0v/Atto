@@ -5,6 +5,7 @@ import dto.ProfileDto;
 import dto.RegisterDto;
 import entity.Profile;
 import enums.Role;
+import enums.Status;
 import repository.ProfileRepository;
 
 import java.time.LocalDateTime;
@@ -70,5 +71,17 @@ public class ProfileService {
                     profile.getCreatedDate()
             );})
                 .toList();
+    }
+
+    public String changeProfileStatusByPhone(String phone) {
+        List<Profile> profiles = repository.getData();
+        for (Profile profile : profiles) {
+            if(profile.getPhone().equals(phone)){
+                profile.setStatus(profile.getStatus().equals(Status.ACTIVE) ? Status.BLOCKED : Status.ACTIVE);
+                repository.update(profiles);
+                return "Successfully changed";
+            }
+        }
+        return "Profile not found";
     }
 }

@@ -20,11 +20,19 @@ public class AdminUi {
                 case 1 -> cardUi.run();
                 case 2 -> terminalUi.run();
                 case 3 -> showProfileList();
+                case 4 -> changeProfileStatus();
                 case 0 -> {
                     return;
                 }
             }
         }
+    }
+
+    private void changeProfileStatus() {
+        System.out.print("Enter phone number: ");
+        String phone = ScannerUtil.SCANNER_STR.next();
+
+        System.out.println(profileController.changeProfileStatusByPhone(phone));
     }
 
     private void showProfileList() {
@@ -48,6 +56,7 @@ public class AdminUi {
         System.out.println("1.Card menu");
         System.out.println("2.Terminal menu");
         System.out.println("3.Profile list");
+        System.out.println("4.Change profile status");
         System.out.println("0.Exit");
         System.out.print(">>>>> ");
         return ScannerUtil.SCANNER_NUM.nextInt();
