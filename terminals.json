@@ -1,0 +1,18 @@
+[
+  {
+    "id": "9f7a632f-6593-4f98-bbc1-50d9ecd7b90b",
+    "createdDate": "2026-02-14T12:56:35.046854400",
+    "visible": true,
+    "number": "12345678",
+    "address": "Surxondaryo viloyati Sariosiyo Tumani Tortuli maxallasi",
+    "status": "ACTIVE"
+  },
+  {
+    "id": "0d507a5e-f14a-4885-808b-1e0b83826e42",
+    "createdDate": "2026-02-14T13:05:52.597902",
+    "visible": true,
+    "number": "12345687",
+    "address": "Samarqand viloyati Samarqand shahar Kokcha maxallasi",
+    "status": "ACTIVE"
+  }
+]

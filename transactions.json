@@ -1,0 +1,20 @@
+[
+  {
+    "id": "4b19757b-5e38-4244-8cd3-acbe117837f7",
+    "createdDate": "2026-02-15T21:58:57.825560400",
+    "visible": true,
+    "cardNumber": "9987327282037200",
+    "terminalCode": "12345678",
+    "amount": null,
+    "type": "PAYMENT"
+  },
+  {
+    "id": "82b0080e-5e97-455d-9bf8-53fd7c396915",
+    "createdDate": "2026-02-17T19:15:17.088484200",
+    "visible": true,
+    "cardNumber": "9987327282037200",
+    "terminalCode": null,
+    "amount": 1000.0,
+    "type": "REFILL"
+  }
+]
