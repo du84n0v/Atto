@@ -12,6 +12,5 @@ public class TransactionUi {
 
     public void fillBalance(String cardNumber, double amount) {
         controller.fillBalance(cardNumber, amount);
-        System.out.println("Good");
     }
 }
