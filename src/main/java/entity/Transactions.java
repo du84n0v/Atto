@@ -17,4 +17,12 @@ public class Transactions extends BaseEntity{
     private String terminalCode;
     private Double amount;
     private TransactionType type;
+
+    public String toStringForUser(){
+        return "Date: " + getCreatedDate() +
+                "\nCardNumber: " + cardNumber +
+                "\nTerminal code: " + terminalCode +
+                "\nAmount: " + amount +
+                "\nType: " + type;
+    }
 }

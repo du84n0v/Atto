@@ -1,6 +1,10 @@
 package ui;
 
 import controller.TransactionController;
+import entity.Transactions;
+
+import java.util.List;
+import java.util.UUID;
 
 public class TransactionUi {
 
@@ -12,5 +16,9 @@ public class TransactionUi {
 
     public void fillBalance(String cardNumber, double amount) {
         controller.fillBalance(cardNumber, amount);
+    }
+
+    public List<Transactions> getTransactionsByProfileId(UUID profileId) {
+        return controller.getTransactionsByProfileId(profileId);
     }
 }

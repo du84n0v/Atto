@@ -8,6 +8,8 @@ import enums.TransactionType;
 import repository.TransactionRepository;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,6 +52,7 @@ public class TransactionService {
         transaction.setVisible(true);
         transaction.setCardNumber(cardNumber);
         transaction.setTerminalCode(terminalCode);
+        transaction.setAmount(RIDE_FIRE);
         transaction.setType(TransactionType.PAYMENT);
 
         repository.save(List.of(transaction));
@@ -75,5 +78,18 @@ public class TransactionService {
         cardService.fillBalance(cardNumber, amount);
 
         repository.save(List.of(transactions));
+    }
+
+    public List<Transactions> getTransactionsByProfileId(UUID profileId) {
+        List<String> profileCardNumbers = cardService.getProfileCards(profileId)
+                .stream()
+                .map(Card::getCardNumber)
+                .toList();
+
+        return repository.getData()
+                .stream()
+                .filter(tr -> profileCardNumbers.contains(tr.getCardNumber()))
+                .sorted(Comparator.comparing(Transactions::getCreatedDate).reversed())
+                .toList();
     }
 }

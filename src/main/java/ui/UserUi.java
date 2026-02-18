@@ -2,6 +2,7 @@ package ui;
 
 import entity.Card;
 import entity.Profile;
+import entity.Transactions;
 import utils.ScannerUtil;
 
 import java.util.List;
@@ -20,10 +21,19 @@ public class UserUi {
                 case 3 -> changeCardStatus(profile);
                 case 4 -> deleteCard(profile);
                 case 5 -> fillBalance(profile);
+                case 6 -> transactionHistory(profile);
                 case 0 -> {
                     return;
                 }
             }
+        }
+    }
+
+    private void transactionHistory(Profile profile) {
+        List<Transactions> transactions = transactionUi.getTransactionsByProfileId(profile.getId());
+        for (Transactions transaction : transactions) {
+            System.out.println(transaction.toStringForUser());
+            System.out.println();
         }
     }
 
@@ -97,6 +107,7 @@ public class UserUi {
         System.out.println("3.Change card status");
         System.out.println("4.Delete card");
         System.out.println("5.Fill balance");
+        System.out.println("6.Transaction history");
         System.out.println("0.Exit");
         System.out.print(">>>>> ");
         return ScannerUtil.SCANNER_NUM.nextInt();
