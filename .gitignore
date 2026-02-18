@@ -37,3 +37,8 @@ build/
 
 ### Mac OS ###
 .DS_Store
+cards.json
+profiles.json
+profile_card.json
+terminals.json
+transactions.json
