@@ -1,6 +1,5 @@
 package service;
 
-import dto.ProfileDto;
 import dto.ProfileShortDto;
 import dto.TransactionResponseDto;
 import entity.*;
@@ -16,7 +15,7 @@ public class TransactionService {
     private final TerminalService terminalService = new TerminalService();
     private final CardService cardService = new CardService();
     private final TransactionRepository repository = new TransactionRepository();
-    private final ProfileCardService profileCardService = new ProfileCardService();
+    private final ProfileService profileService = new ProfileService();
 
     private static final double RIDE_FIRE = 1700.0;
     private static final String COMPANY_CARD_NUMBER = "1111111111111111";
@@ -92,15 +91,38 @@ public class TransactionService {
                 .toList();
     }
 
-//    public List<TransactionResponseDto> transactionList() {
-//        List<Transactions> transactions = repository.getData();
-//
-//        transactions.sort(Comparator.comparing(BaseEntity::getCreatedDate).reversed());
-//
-//        List<TransactionResponseDto> response = new LinkedList<>();
-//
-//        for (Transactions transaction : transactions) {
-//            ProfileShortDto shortDto = cardService.getProfileShortByCardNumber(transaction.getCardNumber());
-//        }
-//    }
+    public List<TransactionResponseDto> transactionList() {
+        Map<String, String> terminalAddress = terminalService.getTerminalAddress();
+        Map<String, ProfileShortDto> profileShortInfo = profileService.getProfileShortInfo();
+
+        List<TransactionResponseDto> response = new LinkedList<>();
+
+        List<Transactions> transactions = repository.getData();
+        transactions.sort(Comparator.comparing(Transactions::getCreatedDate).reversed());
+
+        for (Transactions datum : transactions) {
+
+            String cardNumber = datum.getCardNumber();
+            String terminalCode = datum.getTerminalCode();
+            String terAddress = (datum.getTerminalCode() != null ? terminalAddress.get(datum.getTerminalCode()) : "null");
+            Double amount = datum.getAmount();
+            TransactionType type = datum.getType();
+            String date = datum.getCreatedDate();
+            String name = profileShortInfo.get(datum.getCardNumber()).name();
+            String surname = profileShortInfo.get(datum.getCardNumber()).surname();
+
+            TransactionResponseDto dto = new TransactionResponseDto(
+                    cardNumber,
+                    name,
+                    surname,
+                    terminalCode,
+                    terAddress,
+                    amount,
+                    type
+            );
+            response.add(dto);
+        }
+
+        return response;
+    }
 }

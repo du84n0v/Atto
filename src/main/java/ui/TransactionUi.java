@@ -24,6 +24,17 @@ public class TransactionUi {
     }
 
     public void transactionList() {
-//        List<TransactionResponseDto> response = controller.transactionList();
+        List<TransactionResponseDto> response = controller.transactionList();
+        if(response.isEmpty()){
+            System.out.println("No transaction yet");
+            return;
+        }
+        int cnt = 1;
+        for (TransactionResponseDto tt : response) {
+            System.out.println("=====    Transaction #" + (cnt++) + "    =====");
+            System.out.println(tt.toString());
+            System.out.println();
+        }
+
     }
 }

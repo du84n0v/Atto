@@ -2,6 +2,7 @@ package service;
 
 import dto.LoginDto;
 import dto.ProfileDto;
+import dto.ProfileShortDto;
 import dto.RegisterDto;
 import entity.Profile;
 import enums.Role;
@@ -9,13 +10,16 @@ import enums.Status;
 import repository.ProfileRepository;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class ProfileService {
 
     private final ProfileRepository repository = new ProfileRepository();
     private final CardService cardService = new CardService();
+    private final ProfileCardService profileCardService = new ProfileCardService();
 
     public String save(RegisterDto profileDto) {
         if(phoneExist(profileDto.phone())){
@@ -84,5 +88,23 @@ public class ProfileService {
             }
         }
         return "Profile not found";
+    }
+
+    public Map<String, ProfileShortDto> getProfileShortInfo() {
+        Map<String, UUID> profileCard = profileCardService.getProfileIds();
+        Map<String, ProfileShortDto> response = new HashMap<>();
+        for(String cardNumber :profileCard.keySet()){
+            Profile profile = getProfileByProfileId(profileCard.get(cardNumber));
+            response.put(cardNumber, new ProfileShortDto(profile.getName(), profile.getSurname()));
+        }
+        return response;
+    }
+
+    private Profile getProfileByProfileId(UUID profileId) {
+        return repository.getData()
+                .stream()
+                .filter(p -> p.getId().equals(profileId))
+                .findFirst()
+                .orElse(null);
     }
 }

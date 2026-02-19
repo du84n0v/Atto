@@ -23,7 +23,7 @@ public class TransactionController {
         return service.getTransactionsByProfileId(profileId);
     }
 
-//    public List<TransactionResponseDto> transactionList() {
-////        return service.transactionList();
-//    }
+    public List<TransactionResponseDto> transactionList() {
+        return service.transactionList();
+    }
 }

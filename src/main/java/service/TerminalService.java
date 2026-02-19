@@ -7,9 +7,7 @@ import enums.Status;
 import repository.TerminalRepository;
 
 import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class TerminalService {
 
@@ -76,5 +74,13 @@ public class TerminalService {
                 .filter(terminal -> terminal.getNumber().equals(terminalCode))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public Map<String, String> getTerminalAddress() {
+        Map<String, String> response = new HashMap<>();
+        for (Terminal datum : repository.getData()) {
+            response.put(datum.getNumber(), datum.getAddress());
+        }
+        return response;
     }
 }

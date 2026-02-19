@@ -1,10 +1,13 @@
 package service;
 
+import dto.ProfileShortDto;
 import entity.ProfileCard;
 import repository.ProfileCardRepository;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class ProfileCardService {
@@ -53,5 +56,13 @@ public class ProfileCardService {
                         .filter(pc -> !pc.getCardNumber().equals(cardNumber))
                         .toList()
         );
+    }
+
+    public Map<String, UUID> getProfileIds() {
+        Map<String, UUID> response = new HashMap<>();
+        for (ProfileCard datum : repository.getData()) {
+            response.put(datum.getCardNumber(), datum.getProfileId());
+        }
+        return response;
     }
 }
