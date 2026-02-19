@@ -13,4 +13,17 @@ public record ProfileDto(
         int cardCount,
         Status status,
         String createdDate) {
+
+    @Override
+    public String toString(){
+        return "Id: " + id +
+                "\nName: " + name +
+                "\nSurname: " + surname +
+                "\nPhone: " + phone +
+                "\nPassword: " + password +
+                "\nCard Count: " + cardCount +
+                "\nStatus: " + status +
+                "\nCreated Date: " + createdDate;
+    }
+
 }

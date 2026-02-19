@@ -45,14 +45,7 @@ public class AdminUi {
         int cnt = 1;
         for (ProfileDto profile : profiles) {
             System.out.println("Profile #" + (cnt++));
-            System.out.println("ID: " + profile.id());
-            System.out.println("Name: " + profile.name());
-            System.out.println("Surname: " + profile.surname());
-            System.out.println("Phone: " + profile.phone());
-            System.out.println("Password: " + profile.password());
-            System.out.println("Card count: " + profile.cardCount());
-            System.out.println("Status: " + profile.status());
-            System.out.println("Created date: " + profile.createdDate());
+            System.out.println(profile.toString());
             System.out.println();
         }
     }
