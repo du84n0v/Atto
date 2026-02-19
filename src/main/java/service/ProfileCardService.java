@@ -1,6 +1,5 @@
 package service;
 
-import entity.Card;
 import entity.ProfileCard;
 import repository.ProfileCardRepository;
 
@@ -12,8 +11,8 @@ public class ProfileCardService {
 
     private final ProfileCardRepository repository = new ProfileCardRepository();
 
-    public String assignCardToProfile(UUID cardId, UUID profileId) {
-        if(isCardOwned(cardId)){
+    public String assignCardToProfile(String cardNumber, UUID profileId) {
+        if(isCardOwned(cardNumber)){
             return "Card already has owner";
         }
 
@@ -21,7 +20,7 @@ public class ProfileCardService {
         profileCard.setId(UUID.randomUUID());
         profileCard.setCreatedDate(LocalDateTime.now().toString());
         profileCard.setVisible(true);
-        profileCard.setCardId(cardId);
+        profileCard.setCardNumber(cardNumber);
         profileCard.setProfileId(profileId);
 
         repository.save(List.of(profileCard));
@@ -29,29 +28,29 @@ public class ProfileCardService {
         return "Successfully assigned";
     }
 
-    private List<ProfileCard> getProfileCard(){
+    public List<ProfileCard> getProfileCard(){
         return repository.getData();
     }
 
-    private boolean isCardOwned(UUID cardId) {
+    private boolean isCardOwned(String cardNumber) {
         return repository.getData()
                 .stream()
-                .anyMatch(pc -> pc.getCardId().equals(cardId));
+                .anyMatch(pc -> pc.getCardNumber().equals(cardNumber));
     }
 
-    public List<UUID> getProfileCards(UUID profileId) {
+    public List<String> getProfileCardNumbers(UUID profileId) {
         return repository.getData()
                 .stream()
                 .filter(pc -> pc.getProfileId().equals(profileId))
-                .map(ProfileCard::getCardId)
+                .map(ProfileCard::getCardNumber)
                 .toList();
     }
 
-    public void delete(UUID cardId) {
+    public void delete(String cardNumber) {
         repository.update(
                 getProfileCard()
                         .stream()
-                        .filter(pc -> !pc.getCardId().equals(cardId))
+                        .filter(pc -> !pc.getCardNumber().equals(cardNumber))
                         .toList()
         );
     }

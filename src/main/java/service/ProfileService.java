@@ -31,6 +31,7 @@ public class ProfileService {
         profile.setSurname(profileDto.surname());
         profile.setPhone(profileDto.phone());
         profile.setPassword(profileDto.password());
+        profile.setStatus(Status.ACTIVE);
         profile.setRole(Role.USER);
 
         repository.save(List.of(profile));

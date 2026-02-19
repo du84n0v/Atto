@@ -39,8 +39,8 @@ public class CardController {
         return service.getProfileCards(profileId);
     }
 
-    public void deleteUserCard(UUID cardId) {
-        service.deleteUserCard(cardId);
+    public void deleteUserCard(String cardNumber) {
+        service.deleteUserCard(cardNumber);
     }
 
     public void fillBalance(String cardNumber, double amount) {

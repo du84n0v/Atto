@@ -9,6 +9,6 @@ import java.util.UUID;
 @Getter @Setter
 
 public class ProfileCard extends BaseEntity{
-    private UUID cardId;
+    private String cardNumber;
     private UUID profileId;
 }

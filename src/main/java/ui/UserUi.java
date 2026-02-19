@@ -55,7 +55,7 @@ public class UserUi {
         String cardNumber = ScannerUtil.SCANNER_STR.next();
         for (Card myCard : getMyCards(profile.getId())) {
             if(myCard.getCardNumber().equals(cardNumber)){
-                cardUi.deleteUserCard(myCard.getId());
+                cardUi.deleteUserCard(cardNumber);
                 System.out.println("Successfully deleted");
                 return;
             }

@@ -1,5 +1,6 @@
 package controller;
 
+import dto.TransactionResponseDto;
 import entity.Transactions;
 import service.TransactionService;
 
@@ -21,4 +22,8 @@ public class TransactionController {
     public List<Transactions> getTransactionsByProfileId(UUID profileId) {
         return service.getTransactionsByProfileId(profileId);
     }
+
+//    public List<TransactionResponseDto> transactionList() {
+////        return service.transactionList();
+//    }
 }

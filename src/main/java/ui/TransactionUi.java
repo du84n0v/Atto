@@ -1,6 +1,7 @@
 package ui;
 
 import controller.TransactionController;
+import dto.TransactionResponseDto;
 import entity.Transactions;
 
 import java.util.List;
@@ -20,5 +21,9 @@ public class TransactionUi {
 
     public List<Transactions> getTransactionsByProfileId(UUID profileId) {
         return controller.getTransactionsByProfileId(profileId);
+    }
+
+    public void transactionList() {
+//        List<TransactionResponseDto> response = controller.transactionList();
     }
 }

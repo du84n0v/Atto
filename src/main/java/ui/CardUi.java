@@ -108,8 +108,8 @@ public class CardUi {
         return controller.getProfileCards(profileId);
     }
 
-    public void deleteUserCard(UUID cardId) {
-        controller.deleteUserCard(cardId);
+    public void deleteUserCard(String cardNumber) {
+        controller.deleteUserCard(cardNumber);
     }
 
     public boolean existCard(String cardNumber) {

@@ -1,23 +1,22 @@
 package service;
 
-import entity.Card;
-import entity.Terminal;
-import entity.Transactions;
+import dto.ProfileDto;
+import dto.ProfileShortDto;
+import dto.TransactionResponseDto;
+import entity.*;
 import enums.Status;
 import enums.TransactionType;
 import repository.TransactionRepository;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class TransactionService {
 
     private final TerminalService terminalService = new TerminalService();
     private final CardService cardService = new CardService();
     private final TransactionRepository repository = new TransactionRepository();
+    private final ProfileCardService profileCardService = new ProfileCardService();
 
     private static final double RIDE_FIRE = 1700.0;
     private static final String COMPANY_CARD_NUMBER = "1111111111111111";
@@ -92,4 +91,16 @@ public class TransactionService {
                 .sorted(Comparator.comparing(Transactions::getCreatedDate).reversed())
                 .toList();
     }
+
+//    public List<TransactionResponseDto> transactionList() {
+//        List<Transactions> transactions = repository.getData();
+//
+//        transactions.sort(Comparator.comparing(BaseEntity::getCreatedDate).reversed());
+//
+//        List<TransactionResponseDto> response = new LinkedList<>();
+//
+//        for (Transactions transaction : transactions) {
+//            ProfileShortDto shortDto = cardService.getProfileShortByCardNumber(transaction.getCardNumber());
+//        }
+//    }
 }

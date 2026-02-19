@@ -93,15 +93,15 @@ public class CardService {
             return "Card is not active";
         }
 
-        return profileCardService.assignCardToProfile(card.getId(), profileId);
+        return profileCardService.assignCardToProfile(cardNumber, profileId);
     }
 
     public List<Card> getProfileCards(UUID profileId) {
-        List<UUID> cardIds =  profileCardService.getProfileCards(profileId);
+        List<String> cardNumbers =  profileCardService.getProfileCardNumbers(profileId);
         List<Card> cards = new LinkedList<>();
         for (Card card : repository.getData()) {
-            for(UUID ids :cardIds){
-                if(card.getId().equals(ids)) {
+            for(String number :cardNumbers){
+                if(card.getCardNumber().equals(number)) {
                     cards.add(card);
                     break;
                 }
@@ -110,8 +110,8 @@ public class CardService {
         return cards;
     }
 
-    public void deleteUserCard(UUID cardId) {
-        profileCardService.delete(cardId);
+    public void deleteUserCard(String cardNumber) {
+        profileCardService.delete(cardNumber);
     }
 
     public void fillBalance(String cardNumber, double amount) {

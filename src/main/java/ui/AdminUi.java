@@ -13,6 +13,7 @@ public class AdminUi {
     private final CardUi cardUi = new CardUi();
     private final TerminalUi terminalUi = new TerminalUi();
     private final ProfileController profileController = new ProfileController();
+    private final TransactionUi transactionUi = new TransactionUi();
 
     public void run(Profile profile){
         while (true){
@@ -21,6 +22,7 @@ public class AdminUi {
                 case 2 -> terminalUi.run();
                 case 3 -> showProfileList();
                 case 4 -> changeProfileStatus();
+                case 5 -> transactionUi.transactionList();
                 case 0 -> {
                     return;
                 }
@@ -57,6 +59,7 @@ public class AdminUi {
         System.out.println("2.Terminal menu");
         System.out.println("3.Profile list");
         System.out.println("4.Change profile status");
+        System.out.println("5.Transaction list");
         System.out.println("0.Exit");
         System.out.print(">>>>> ");
         return ScannerUtil.SCANNER_NUM.nextInt();
