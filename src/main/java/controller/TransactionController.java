@@ -29,7 +29,11 @@ public class TransactionController {
         return service.transactionList();
     }
 
-    public List<TransactionShortDto> getTodayPayment(LocalDate today) {
-        return service.getTodayPayment(today);
+    public List<TransactionShortDto> getTodayPayment() {
+        return service.getTodayPayment();
+    }
+
+    public List<TransactionShortDto> getDailyPayment(LocalDate day) {
+        return service.getDailyPayment(day);
     }
 }

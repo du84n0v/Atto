@@ -129,14 +129,14 @@ public class TransactionService {
         return response;
     }
 
-    public List<TransactionShortDto> getTodayPayment(LocalDate today) {
+    public List<TransactionShortDto> getTodayPayment() {
         List<TransactionShortDto> response = new LinkedList<>();
         List<Transactions> base = repository.getData();
         Map<String, String> terminalAddress = terminalService.getTerminalAddress();
         base.sort(Comparator.comparing(Transactions::getCreatedDate).reversed());
         for (Transactions datum : base) {
             LocalDate date =  LocalDateTime.parse(datum.getCreatedDate()).toLocalDate();
-            if(date.equals(today)){
+            if(date.equals(LocalDate.now())){
                 response.add(new TransactionShortDto(
                         datum.getCardNumber(),
                         terminalAddress.get(datum.getTerminalCode()) != null ? terminalAddress.get(datum.getTerminalCode()) : "null",
@@ -144,6 +144,25 @@ public class TransactionService {
                         datum.getCreatedDate(),
                         datum.getType()
                 ));
+            }
+        }
+        return response;
+    }
+
+    public List<TransactionShortDto> getDailyPayment(LocalDate day) {
+        List<TransactionShortDto> response = new LinkedList<>();
+        Map<String, String> terminalAddress = terminalService.getTerminalAddress();
+        for (Transactions tr : repository.getData()) {
+            LocalDate date = LocalDateTime.parse(tr.getCreatedDate()).toLocalDate();
+            if(date.equals(day)){
+                response.add(new TransactionShortDto(
+                        tr.getCardNumber(),
+                        terminalAddress.get(tr.getTerminalCode()) != null ? terminalAddress.get(tr.getTerminalCode()) : "null",
+                        tr.getAmount(),
+                        tr.getCreatedDate(),
+                        tr.getType()
+                        )
+                );
             }
         }
         return response;

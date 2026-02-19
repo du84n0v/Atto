@@ -14,6 +14,7 @@ public class StatisticsUi {
         while (true){
             switch (menu()){
                 case 1 -> todayPayment();
+                case 2 -> dailyPayment();
                 case 0 -> {
                     return;
                 }
@@ -21,8 +22,15 @@ public class StatisticsUi {
         }
     }
 
-    private void todayPayment() {
-        List<TransactionShortDto> list = transactionUi.getTodayPayment(LocalDate.now());
+    private int menu() {
+        System.out.println("1.Today's payments");
+        System.out.println("2.Daily payments");
+        System.out.println("0.Exit");
+        System.out.print(">>>> ");
+        return ScannerUtil.SCANNER_NUM.nextInt();
+    }
+
+    public void show(List<TransactionShortDto> list){
         if(list.isEmpty()){
             System.out.println("No payment yet");
             return;
@@ -36,10 +44,17 @@ public class StatisticsUi {
         }
     }
 
-    private int menu() {
-        System.out.println("1.Today's payments");
-        System.out.println("0.Exit");
-        System.out.print(">>>> ");
-        return ScannerUtil.SCANNER_NUM.nextInt();
+    private void todayPayment() {
+        List<TransactionShortDto> list = transactionUi.getTodayPayment();
+        show(list);
+    }
+
+    private void dailyPayment() {
+        System.out.print("Enter day (yyyy-MM-dd): ");
+        String day = ScannerUtil.SCANNER_STR.next();
+
+        List<TransactionShortDto> list = transactionUi.getDailyPayment(LocalDate.parse(day));
+
+        show(list);
     }
 }

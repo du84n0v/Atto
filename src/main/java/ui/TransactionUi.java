@@ -40,7 +40,11 @@ public class TransactionUi {
 
     }
 
-    public List<TransactionShortDto> getTodayPayment(LocalDate today) {
-        return controller.getTodayPayment(today);
+    public List<TransactionShortDto> getTodayPayment() {
+        return controller.getTodayPayment();
+    }
+
+    public List<TransactionShortDto> getDailyPayment(LocalDate day) {
+        return controller.getDailyPayment(day);
     }
 }
