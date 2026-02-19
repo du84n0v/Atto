@@ -46,4 +46,8 @@ public class CardController {
     public void fillBalance(String cardNumber, double amount) {
         service.fillBalance(cardNumber, amount);
     }
+
+    public Double getCompanyCardBalance() {
+        return service.getCompanyCardBalance();
+    }
 }

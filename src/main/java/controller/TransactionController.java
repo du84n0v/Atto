@@ -1,9 +1,11 @@
 package controller;
 
 import dto.TransactionResponseDto;
+import dto.TransactionShortDto;
 import entity.Transactions;
 import service.TransactionService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,5 +27,9 @@ public class TransactionController {
 
     public List<TransactionResponseDto> transactionList() {
         return service.transactionList();
+    }
+
+    public List<TransactionShortDto> getTodayPayment(LocalDate today) {
+        return service.getTodayPayment(today);
     }
 }

@@ -2,8 +2,10 @@ package ui;
 
 import controller.TransactionController;
 import dto.TransactionResponseDto;
+import dto.TransactionShortDto;
 import entity.Transactions;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,5 +38,9 @@ public class TransactionUi {
             System.out.println();
         }
 
+    }
+
+    public List<TransactionShortDto> getTodayPayment(LocalDate today) {
+        return controller.getTodayPayment(today);
     }
 }

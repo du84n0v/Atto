@@ -9,6 +9,7 @@ public record TransactionResponseDto(
         String terminalNumber,
         String terminalAddress,
         Double amount,
+        String date,
         TransactionType type) {
 
     @Override
@@ -19,6 +20,7 @@ public record TransactionResponseDto(
                 "\nTerminal Number: " + terminalNumber +
                 "\nTerminal address: " + terminalAddress +
                 "\nAmount: " + amount +
+                "\nDate: " + date +
                 "\nType: " + type;
     }
 

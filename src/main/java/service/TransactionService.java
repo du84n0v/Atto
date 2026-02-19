@@ -2,11 +2,13 @@ package service;
 
 import dto.ProfileShortDto;
 import dto.TransactionResponseDto;
+import dto.TransactionShortDto;
 import entity.*;
 import enums.Status;
 import enums.TransactionType;
 import repository.TransactionRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -118,11 +120,32 @@ public class TransactionService {
                     terminalCode,
                     terAddress,
                     amount,
+                    datum.getCreatedDate(),
                     type
             );
             response.add(dto);
         }
 
+        return response;
+    }
+
+    public List<TransactionShortDto> getTodayPayment(LocalDate today) {
+        List<TransactionShortDto> response = new LinkedList<>();
+        List<Transactions> base = repository.getData();
+        Map<String, String> terminalAddress = terminalService.getTerminalAddress();
+        base.sort(Comparator.comparing(Transactions::getCreatedDate).reversed());
+        for (Transactions datum : base) {
+            LocalDate date =  LocalDateTime.parse(datum.getCreatedDate()).toLocalDate();
+            if(date.equals(today)){
+                response.add(new TransactionShortDto(
+                        datum.getCardNumber(),
+                        terminalAddress.get(datum.getTerminalCode()) != null ? terminalAddress.get(datum.getTerminalCode()) : "null",
+                        datum.getAmount(),
+                        datum.getCreatedDate(),
+                        datum.getType()
+                ));
+            }
+        }
         return response;
     }
 }

@@ -121,4 +121,8 @@ public class CardUi {
     public void fillBalance(String cardNumber, double amount) {
         controller.fillBalance(cardNumber, amount);
     }
+
+    public void companyCardBalance() {
+        System.out.println("Balance: " + controller.getCompanyCardBalance());
+    }
 }

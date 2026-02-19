@@ -119,4 +119,13 @@ public class CardService {
         card.setBalance(card.getBalance()+amount);
         updateThisCard(card);
     }
+
+    public Double getCompanyCardBalance() {
+        return repository.getData()
+                .stream()
+                .filter(card -> card.getCardNumber().equals("1111111111111111"))
+                .map(Card::getBalance)
+                .findFirst()
+                .orElse(null);
+    }
 }
