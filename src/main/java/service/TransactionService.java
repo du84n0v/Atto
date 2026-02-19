@@ -134,37 +134,87 @@ public class TransactionService {
         List<Transactions> base = repository.getData();
         Map<String, String> terminalAddress = terminalService.getTerminalAddress();
         base.sort(Comparator.comparing(Transactions::getCreatedDate).reversed());
+
         for (Transactions datum : base) {
             LocalDate date =  LocalDateTime.parse(datum.getCreatedDate()).toLocalDate();
             if(date.equals(LocalDate.now())){
-                response.add(new TransactionShortDto(
-                        datum.getCardNumber(),
-                        terminalAddress.get(datum.getTerminalCode()) != null ? terminalAddress.get(datum.getTerminalCode()) : "null",
-                        datum.getAmount(),
-                        datum.getCreatedDate(),
-                        datum.getType()
-                ));
+                response.add(makeTransactionShortDto(datum, terminalAddress.get(datum.getTerminalCode())));
             }
         }
+
         return response;
     }
 
     public List<TransactionShortDto> getDailyPayment(LocalDate day) {
         List<TransactionShortDto> response = new LinkedList<>();
         Map<String, String> terminalAddress = terminalService.getTerminalAddress();
-        for (Transactions tr : repository.getData()) {
+        List<Transactions> base = repository.getData();
+        base.sort(Comparator.comparing(Transactions::getCreatedDate).reversed());
+
+        for (Transactions tr : base) {
             LocalDate date = LocalDateTime.parse(tr.getCreatedDate()).toLocalDate();
             if(date.equals(day)){
-                response.add(new TransactionShortDto(
-                        tr.getCardNumber(),
-                        terminalAddress.get(tr.getTerminalCode()) != null ? terminalAddress.get(tr.getTerminalCode()) : "null",
-                        tr.getAmount(),
-                        tr.getCreatedDate(),
-                        tr.getType()
-                        )
-                );
+                response.add(makeTransactionShortDto(tr, terminalAddress.get(tr.getTerminalCode())));
             }
         }
+
+        return response;
+    }
+
+    public List<TransactionShortDto> interimPayment(LocalDate fromDate, LocalDate toDate) {
+        List<TransactionShortDto> response = new LinkedList<>();
+        Map<String, String> terminalAddress = terminalService.getTerminalAddress();
+        List<Transactions> base = repository.getData();
+        base.sort(Comparator.comparing(Transactions::getCreatedDate).reversed());
+
+        for (Transactions transaction : base) {
+            LocalDate date = LocalDateTime.parse(transaction.getCreatedDate()).toLocalDate();
+
+            if((date.isAfter(fromDate) || date.equals(fromDate)) && (date.isBefore(toDate) || date.equals(toDate))){
+                response.add(makeTransactionShortDto(transaction, terminalAddress.get(transaction.getTerminalCode())));
+            }
+        }
+
+        return response;
+    }
+
+    public List<TransactionShortDto> transactionByTerminal(String number) {
+        List<TransactionShortDto> response = new LinkedList<>();
+        Map<String, String> terminalAddress = terminalService.getTerminalAddress();
+        List<Transactions> base = repository.getData();
+        base.sort(Comparator.comparing(Transactions::getCreatedDate).reversed());
+
+        for (Transactions transaction : base) {
+            if(transaction.getTerminalCode() != null && transaction.getTerminalCode().equals(number)){
+                response.add(makeTransactionShortDto(transaction, terminalAddress.get(transaction.getTerminalCode())));
+            }
+        }
+
+        return response;
+    }
+
+    private TransactionShortDto makeTransactionShortDto(Transactions transaction, String address) {
+        return new TransactionShortDto(
+                transaction.getCardNumber(),
+                address,
+                transaction.getAmount(),
+                transaction.getCreatedDate(),
+                transaction.getType()
+        );
+    }
+
+    public List<TransactionShortDto> transactionByCard(String cardNumber) {
+        List<TransactionShortDto> response = new LinkedList<>();
+        Map<String, String> terminalAddress = terminalService.getTerminalAddress();
+        List<Transactions> base = repository.getData();
+        base.sort(Comparator.comparing(Transactions::getCreatedDate).reversed());
+
+        for (Transactions transaction : base) {
+            if(transaction.getCardNumber().equals(cardNumber)){
+                response.add(makeTransactionShortDto(transaction, terminalAddress.get(transaction.getTerminalCode())));
+            }
+        }
+
         return response;
     }
 }

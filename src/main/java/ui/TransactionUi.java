@@ -47,4 +47,16 @@ public class TransactionUi {
     public List<TransactionShortDto> getDailyPayment(LocalDate day) {
         return controller.getDailyPayment(day);
     }
+
+    public List<TransactionShortDto> interimPayment(LocalDate fromDate, LocalDate toDate) {
+        return controller.interimPayment(fromDate, toDate);
+    }
+
+    public List<TransactionShortDto> transactionByTerminal(String number) {
+        return controller.transactionByTerminal(number);
+    }
+
+    public List<TransactionShortDto> transactionByCard(String cardNumber) {
+        return controller.transactionByCard(cardNumber);
+    }
 }
